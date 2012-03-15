@@ -26,6 +26,8 @@ public class BiasedMonteCarloSolution
     private BestSolutionsArchive archive;
     private int trials;
     private SolutionView view;
+    private double p1;
+    private double p2;
     
     public BiasedMonteCarloSolution(int numberOfTrials)
     {
@@ -38,7 +40,9 @@ public class BiasedMonteCarloSolution
         Dsim = 0.05;
         surveys = 5;
         archiveSize = 10;
-        sPressure = 1.5;
+        sPressure = 1.0;
+        p1 = 10.0;
+        p2 = 1.0;
         
     }
     
@@ -69,28 +73,37 @@ public class BiasedMonteCarloSolution
         mesh.calculateProbability(sPressure);
     }
     
-    public void startMonteCarlo()
+    public double performMonteCarlo()
     {
-        for (int i = 0; i < trials; i++)
+        for (int j = 0; j < 10; j++)
         {
-            Region r = mesh.getRegion(random.nextDouble());
             
-            double avgObjFunVal = calculateAvgObjectiveFunctionWithPenalty(r.getX1(), r.getX2(), r.getSize(),
-                    NUMBER_OF_SURVEYS);
+            for (int i = 0; i < trials; i++)
+            {
+                Region r = mesh.getRegion(random.nextDouble());
+                
+                double avgObjFunVal = calculateAvgObjectiveFunctionWithPenalty(r.getX1(), r.getX2(), r.getSize(),
+                        NUMBER_OF_SURVEYS);
+                
+                mesh.setRegion(r.getRank(), avgObjFunVal);
+            }
             
-            mesh.setRegion(r.getRank(), avgObjFunVal);
+            sPressure += 0.1;
+            p1 += 5;
+            assignRanks();
+            assignProbabilities();
         }
+        // view.setResults(archive.getBestSolutions());
+        // view.show();
         
-        view.setResults(archive.getBestSolutions());
-        view.show();
+        return archive.getBestSolution();
         
     }
     
-    
     private double calculatePenaltyForObjFunction(double x1, double x2)
     {
-        return -(10 * Math.pow(Math.max(0.0, MUL_CONSTRAINT - x1 * x2), 2) + Math.pow(
-                Math.max(0.0, x1 + x2 - ADD_CONSTRAINT), 2));
+        return -(p1 * Math.pow(Math.max(0.0, MUL_CONSTRAINT - x1 * x2), 2) + p2
+                * Math.pow(Math.max(0.0, x1 + x2 - ADD_CONSTRAINT), 2));
     }
     
     private double calculateObjectiveFunction(double x1, double x2)
