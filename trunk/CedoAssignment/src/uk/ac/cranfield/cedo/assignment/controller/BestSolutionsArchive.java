@@ -68,4 +68,16 @@ public class BestSolutionsArchive
     {
         return bestSolutions;
     }
+    
+    public double getBestSolution()
+    {
+        double result = 0.0;
+        
+        while (!bestSolutions.isEmpty())
+        {
+            result = bestSolutions.poll().getObjFunctionValue();
+        }
+        
+        return result;
+    }
 }
