@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotSame;
 
 import org.junit.Test;
 
-import uk.ac.cranfield.cedo.assignment.controller.BestSolutionsArchive;
+import uk.ac.cranfield.cedo.assignment.controller.archive.BestSolutionsArchive;
 import uk.ac.cranfield.cedo.assignment.model.DesignVector;
 
 
