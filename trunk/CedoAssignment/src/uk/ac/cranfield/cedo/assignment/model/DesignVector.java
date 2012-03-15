@@ -10,8 +10,8 @@ public class DesignVector
     
     public DesignVector()
     {
-        this.x1 = -1;
-        this.x2 = -1;
+        this.x1 = -10;
+        this.x2 = -10;
         this.objFunction = 0.0;
         this.penalty = 0.0;
     }
@@ -51,6 +51,42 @@ public class DesignVector
     public final double getX2()
     {
         return x2;
+    }
+    
+    
+    /**
+     * @param x1 the x1 to set
+     */
+    public final void setX1(double x1)
+    {
+        this.x1 = x1;
+    }
+    
+    
+    /**
+     * @param x2 the x2 to set
+     */
+    public final void setX2(double x2)
+    {
+        this.x2 = x2;
+    }
+    
+    
+    /**
+     * @param objFunction the objFunction to set
+     */
+    public final void setObjFunction(double objFunction)
+    {
+        this.objFunction = objFunction;
+    }
+    
+    
+    /**
+     * @param penalty the penalty to set
+     */
+    public final void setPenalty(double penalty)
+    {
+        this.penalty = penalty;
     }
     
 }

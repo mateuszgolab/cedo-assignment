@@ -2,7 +2,7 @@ package uk.ac.cranfield.cedo.assignment.controller;
 
 import java.util.Random;
 
-import uk.ac.cranfield.cedo.assignment.model.DesignVector;
+import uk.ac.cranfield.cedo.assignment.controller.archive.Archive;
 import uk.ac.cranfield.cedo.assignment.model.Mesh;
 import uk.ac.cranfield.cedo.assignment.model.Region;
 import uk.ac.cranfield.cedo.assignment.view.SolutionView;
@@ -23,17 +23,17 @@ public class BiasedMonteCarloSolution
     private double sPressure;
     private int archiveSize;
     private Random random;
-    private BestSolutionsArchive archive;
+    private Archive archive;
     private int trials;
     private SolutionView view;
     private double p1;
     private double p2;
     
-    public BiasedMonteCarloSolution(int numberOfTrials)
+    public BiasedMonteCarloSolution(int numberOfTrials, Archive archive)
     {
         mesh = new Mesh(NUMBER_OF_DISCRETIZATION * NUMBER_OF_DISCRETIZATION);
         random = new Random(System.currentTimeMillis());
-        archive = new BestSolutionsArchive(10);
+        this.archive = archive;
         view = new SolutionView();
         trials = numberOfTrials;
         Dmin = 1.0;
@@ -56,7 +56,7 @@ public class BiasedMonteCarloSolution
         {
             for (double j = 0.0; j < SIZE; j += step)
             {
-                double avgObjFunVal = calculateAvgObjectiveFunctionWithPenalty(i, j, step, NUMBER_OF_SURVEYS);
+                double avgObjFunVal = calculateAvgObjFunction(i, j, step, NUMBER_OF_SURVEYS);
                 
                 mesh.addRegion(new Region(i, j, step, avgObjFunVal));
             }
@@ -82,8 +82,7 @@ public class BiasedMonteCarloSolution
             {
                 Region r = mesh.getRegion(random.nextDouble());
                 
-                double avgObjFunVal = calculateAvgObjectiveFunctionWithPenalty(r.getX1(), r.getX2(), r.getSize(),
-                        NUMBER_OF_SURVEYS);
+                double avgObjFunVal = calculateAvgObjFunction(r.getX1(), r.getX2(), r.getSize(), NUMBER_OF_SURVEYS);
                 
                 mesh.setRegion(r.getRank(), avgObjFunVal);
             }
@@ -116,7 +115,7 @@ public class BiasedMonteCarloSolution
                 / Math.sqrt(x1 * x1 + x2 * x2));
     }
     
-    private double calculateAvgObjectiveFunctionWithPenalty(double x1, double x2, double size, int n)
+    private double calculateAvgObjFunction(double x1, double x2, double size, int n)
     {
         double sum = 0.0;
         
@@ -127,10 +126,8 @@ public class BiasedMonteCarloSolution
             
             double val = calculateObjectiveFunction(x1r, x2r);
             double pen = calculatePenaltyForObjFunction(x1r, x2r);
-            if (archive.getWorstSolution() < val)
-            {
-                archive.addSolution(new DesignVector(x1r, x2r, val, pen));
-            }
+            
+            archive.checkData(val, pen, x1r, x2r);
             
             sum += val + pen;
             
