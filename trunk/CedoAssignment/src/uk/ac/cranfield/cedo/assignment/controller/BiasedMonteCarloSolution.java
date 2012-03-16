@@ -92,8 +92,8 @@ public class BiasedMonteCarloSolution
             assignRanks();
             assignProbabilities();
         }
-        // view.setResults(archive.getBestSolutions());
-        // view.show();
+        view.setResults(archive.getBestSolutions());
+        view.show();
         
         return archive.getBestSolution();
         
@@ -127,7 +127,7 @@ public class BiasedMonteCarloSolution
             double val = calculateObjectiveFunction(x1r, x2r);
             double pen = calculatePenaltyForObjFunction(x1r, x2r);
             
-            archive.checkData(val, pen, x1r, x2r);
+            archive.checkData(val + pen, x1r, x2r);
             
             sum += val + pen;
             

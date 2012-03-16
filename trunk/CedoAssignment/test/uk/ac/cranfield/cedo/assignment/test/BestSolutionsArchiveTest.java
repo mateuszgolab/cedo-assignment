@@ -26,15 +26,15 @@ public class BestSolutionsArchiveTest
     {
         BestSolutionsArchive archive = new BestSolutionsArchive(3);
         
-        DesignVector v1 = new DesignVector(1, 1, 2.0, 0);
+        DesignVector v1 = new DesignVector(1, 1, 2.0);
         archive.addSolution(v1);
         assertNotSame(archive.getWorstSolution(), 2.0);
         
-        DesignVector v2 = new DesignVector(1, 1, 2.0, 0);
+        DesignVector v2 = new DesignVector(1, 1, 2.0);
         archive.addSolution(v2);
         assertNotSame(archive.getWorstSolution(), 2.0);
         
-        DesignVector v3 = new DesignVector(1, 1, 2.0, 0);
+        DesignVector v3 = new DesignVector(1, 1, 2.0);
         archive.addSolution(v3);
         assertEquals(archive.getWorstSolution(), 2.0, 0.0);
         
@@ -47,19 +47,19 @@ public class BestSolutionsArchiveTest
         
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        DesignVector v1 = new DesignVector(1, 1, 0.0, 0);
+        DesignVector v1 = new DesignVector(1, 1, 0.0);
         archive.addSolution(v1);
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        DesignVector v2 = new DesignVector(1, 1, 2.0, 0);
+        DesignVector v2 = new DesignVector(1, 1, 2.0);
         archive.addSolution(v2);
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        DesignVector v3 = new DesignVector(1, 1, 3.0, 0);
+        DesignVector v3 = new DesignVector(1, 1, 3.0);
         archive.addSolution(v3);
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        DesignVector v4 = new DesignVector(1, 1, 4.0, 0);
+        DesignVector v4 = new DesignVector(1, 1, 4.0);
         archive.addSolution(v4);
         assertEquals(archive.getWorstSolution(), 2.0, 0.0);
         
@@ -69,9 +69,9 @@ public class BestSolutionsArchiveTest
     public void minValueOrder()
     {
         BestSolutionsArchive archive = new BestSolutionsArchive(3);
-        DesignVector v1 = new DesignVector(1, 1, 0.0, 0);
-        DesignVector v2 = new DesignVector(1, 1, 1.0, 0);
-        DesignVector v3 = new DesignVector(1, 1, 2.0, 0);
+        DesignVector v1 = new DesignVector(1, 1, 0.0);
+        DesignVector v2 = new DesignVector(1, 1, 1.0);
+        DesignVector v3 = new DesignVector(1, 1, 2.0);
         archive.addSolution(v1);
         archive.addSolution(v2);
         archive.addSolution(v3);
@@ -83,7 +83,7 @@ public class BestSolutionsArchiveTest
         archive2.addSolution(v1);
         assertEquals(archive2.getWorstSolution(), 0, 0.0);
         
-        DesignVector v4 = new DesignVector(1, 1, 4.0, 0);
+        DesignVector v4 = new DesignVector(1, 1, 4.0);
         archive2.addSolution(v4);
         assertEquals(archive2.getWorstSolution(), 1.0, 0.0);
         

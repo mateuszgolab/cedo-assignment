@@ -14,6 +14,7 @@ public class BestSolutionsArchive extends Archive
         worstSolution = 0.0;
     }
     
+    @Override
     public double getWorstSolution()
     {
         return worstSolution;
@@ -35,14 +36,15 @@ public class BestSolutionsArchive extends Archive
     
     
     @Override
-    public void checkData(double value, double pen, double x1, double x2)
+    public void checkData(double value, double x1, double x2)
     {
         if (worstSolution < value)
         {
-            addSolution(new DesignVector(x1, x2, value, pen));
+            addSolution(new DesignVector(x1, x2, value));
         }
     }
     
+    @Override
     public double getBestSolution()
     {
         double result = 0.0;

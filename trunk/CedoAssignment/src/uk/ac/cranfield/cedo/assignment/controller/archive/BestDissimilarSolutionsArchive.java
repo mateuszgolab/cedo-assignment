@@ -37,7 +37,7 @@ public class BestDissimilarSolutionsArchive extends Archive
     }
     
     @Override
-    public void checkData(double value, double pen, double x1, double x2)
+    public void checkData(double value, double x1, double x2)
     {
         if (worstSolution.getObjFunctionValue() < value)
         {
@@ -57,7 +57,7 @@ public class BestDissimilarSolutionsArchive extends Archive
             
             if (distance > Dmin)
             {
-                addSolution(new DesignVector(x1, x2, value, pen));
+                addSolution(new DesignVector(x1, x2, value));
             }
             else
             {
@@ -68,7 +68,6 @@ public class BestDissimilarSolutionsArchive extends Archive
                         xk.setObjFunction(value);
                         xk.setX1(x1);
                         xk.setX2(x2);
-                        xk.setPenalty(pen);
                         
                         if (value > bestSolution.getObjFunctionValue())
                         {
@@ -80,7 +79,7 @@ public class BestDissimilarSolutionsArchive extends Archive
                 {
                     if (value > bestSolution.getObjFunctionValue())
                     {
-                        DesignVector xn = new DesignVector(x1, x2, value, pen);
+                        DesignVector xn = new DesignVector(x1, x2, value);
                         bestSolution = xn;
                         bestSolutions.remove(xk);
                         bestSolutions.add(xn);
