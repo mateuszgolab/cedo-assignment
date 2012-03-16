@@ -6,33 +6,25 @@ public class DesignVector
     private double x1;
     private double x2;
     private double objFunction;
-    private double penalty;
     
     public DesignVector()
     {
         this.x1 = -10;
         this.x2 = -10;
         this.objFunction = 0.0;
-        this.penalty = 0.0;
     }
     
-    public DesignVector(double x1, double x2, double objFunction, double penalty)
+    public DesignVector(double x1, double x2, double objFunction)
     {
         this.x1 = x1;
         this.x2 = x2;
         this.objFunction = objFunction;
-        this.penalty = penalty;
     }
     
     
     public double getObjFunctionValue()
     {
         return objFunction;
-    }
-    
-    public double getObjFuncWithPenalty()
-    {
-        return objFunction + penalty;
     }
     
     
@@ -80,13 +72,5 @@ public class DesignVector
         this.objFunction = objFunction;
     }
     
-    
-    /**
-     * @param penalty the penalty to set
-     */
-    public final void setPenalty(double penalty)
-    {
-        this.penalty = penalty;
-    }
     
 }

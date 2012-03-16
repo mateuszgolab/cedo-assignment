@@ -23,13 +23,13 @@ public class BestDissimilarSolutionsArchiveTest
     {
         BestDissimilarSolutionsArchive archive = new BestDissimilarSolutionsArchive(3, 1.0, 0.05);
         
-        archive.checkData(2.0, 0.0, 1, 1);
+        archive.checkData(2.0, 1, 1);
         assertNotSame(archive.getWorstSolution(), 2.0);
         
-        archive.checkData(2.0, 0.0, 2, 2);
+        archive.checkData(2.0, 2, 2);
         assertNotSame(archive.getWorstSolution(), 2.0);
         
-        archive.checkData(2.0, 0.0, 3, 3);
+        archive.checkData(2.0, 3, 3);
         assertEquals(archive.getWorstSolution(), 2.0, 0.0);
         
     }
@@ -41,16 +41,16 @@ public class BestDissimilarSolutionsArchiveTest
         
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        archive.checkData(0.0, 0.0, 1, 1);
+        archive.checkData(0.0, 1, 1);
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        archive.checkData(2.0, 0.0, 2, 2);
+        archive.checkData(2.0, 2, 2);
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        archive.checkData(3.0, 0.0, 3, 3);
+        archive.checkData(3.0, 3, 3);
         assertEquals(archive.getWorstSolution(), 0.0, 0.0);
         
-        archive.checkData(4.0, 0.0, 4, 4);
+        archive.checkData(4.0, 4, 4);
         assertEquals(archive.getWorstSolution(), 2.0, 0.0);
         
     }
@@ -59,18 +59,18 @@ public class BestDissimilarSolutionsArchiveTest
     public void minValueOrder()
     {
         BestDissimilarSolutionsArchive archive = new BestDissimilarSolutionsArchive(3, 1.0, 0.05);
-        archive.checkData(0.0, 0.0, 1, 1);
-        archive.checkData(1.0, 0.0, 2, 2);
-        archive.checkData(2.0, 0.0, 3, 3);
+        archive.checkData(0.0, 1, 1);
+        archive.checkData(1.0, 2, 2);
+        archive.checkData(2.0, 3, 3);
         assertEquals(archive.getWorstSolution(), 0, 0.0);
         
         BestDissimilarSolutionsArchive archive2 = new BestDissimilarSolutionsArchive(3, 1.0, 0.05);
-        archive2.checkData(2.0, 0.0, 4, 4);
-        archive2.checkData(1.0, 0.0, 5, 5);
-        archive2.checkData(0.0, 0.0, 6, 6);
+        archive2.checkData(2.0, 4, 4);
+        archive2.checkData(1.0, 5, 5);
+        archive2.checkData(0.0, 6, 6);
         assertEquals(archive2.getWorstSolution(), 0, 0.0);
         
-        archive2.checkData(4.0, 0.0, 7, 7);
+        archive2.checkData(4.0, 7, 7);
         assertEquals(archive2.getWorstSolution(), 1.0, 0.0);
         
     }
@@ -79,15 +79,15 @@ public class BestDissimilarSolutionsArchiveTest
     public void greaterThanDminTest()
     {
         BestDissimilarSolutionsArchive archive = new BestDissimilarSolutionsArchive(3, 1.0, 0.05);
-        archive.checkData(1.0, 0.0, 1, 1);
-        archive.checkData(2.0, 0.0, 2, 2);
-        archive.checkData(3.0, 0.0, 3, 3);
+        archive.checkData(1.0, 1, 1);
+        archive.checkData(2.0, 2, 2);
+        archive.checkData(3.0, 3, 3);
         
-        archive.checkData(0.5, 0.0, 4, 4);
+        archive.checkData(0.5, 4, 4);
         assertEquals(archive.getWorstSolution(), 1.0, 0.0);
         
         
-        archive.checkData(1.5, 0.0, 4, 4);
+        archive.checkData(1.5, 4, 4);
         assertEquals(archive.getWorstSolution(), 1.5, 0.0);
         
     }
@@ -96,15 +96,15 @@ public class BestDissimilarSolutionsArchiveTest
     public void lessThanDminGreaterThanDsimTest()
     {
         BestDissimilarSolutionsArchive archive = new BestDissimilarSolutionsArchive(3, 1.0, 0.05);
-        archive.checkData(1.0, 0.0, 1, 1);
-        archive.checkData(2.0, 0.0, 2, 2);
-        archive.checkData(3.0, 0.0, 3, 3);
+        archive.checkData(1.0, 1, 1);
+        archive.checkData(2.0, 2, 2);
+        archive.checkData(3.0, 3, 3);
         
-        archive.checkData(1.5, 0.0, 1.5, 1.5);
+        archive.checkData(1.5, 1.5, 1.5);
         assertEquals(archive.getWorstSolution(), 1.0, 0.0);
         
         
-        archive.checkData(3.5, 0.0, 1.5, 1.5);
+        archive.checkData(3.5, 1.5, 1.5);
         assertEquals(archive.getWorstSolution(), 2.0, 0.0);
         
     }
@@ -113,15 +113,15 @@ public class BestDissimilarSolutionsArchiveTest
     public void lessThanDsimTest()
     {
         BestDissimilarSolutionsArchive archive = new BestDissimilarSolutionsArchive(3, 1.0, 0.05);
-        archive.checkData(1.0, 0.0, 1, 1);
-        archive.checkData(2.0, 0.0, 2, 2);
-        archive.checkData(3.0, 0.0, 3, 3);
+        archive.checkData(1.0, 1, 1);
+        archive.checkData(2.0, 2, 2);
+        archive.checkData(3.0, 3, 3);
         
-        archive.checkData(0.5, 0.0, 1.1, 1.1);
+        archive.checkData(0.5, 1.1, 1.1);
         assertEquals(archive.getWorstSolution(), 1.0, 0.0);
         
         
-        archive.checkData(3.5, 0.0, 1.1, 1.1);
+        archive.checkData(3.5, 1.1, 1.1);
         assertEquals(archive.getWorstSolution(), 2.0, 0.0);
         
     }

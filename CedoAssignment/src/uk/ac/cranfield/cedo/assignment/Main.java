@@ -11,13 +11,13 @@ public class Main
     {
         double best = 0.0;
         double avg = 0.0;
-        double n = 100;
+        double n = 1;
         long time = System.currentTimeMillis();
         
         for (int i = 0; i < n; i++)
         {
             // BiasedMonteCarloSolution bmcs = new BiasedMonteCarloSolution(1000, new BestSolutionsArchive(10));
-            BiasedMonteCarloSolution bmcs = new BiasedMonteCarloSolution(20000, new BestDissimilarSolutionsArchive(10,
+            BiasedMonteCarloSolution bmcs = new BiasedMonteCarloSolution(10000, new BestDissimilarSolutionsArchive(10,
                     1.0, 0.05));
             bmcs.initialize();
             bmcs.assignRanks();
@@ -28,8 +28,8 @@ public class Main
             avg += tmp;
         }
         
-        System.out.println(best);
-        System.out.println(avg / n);
-        System.out.println((System.currentTimeMillis() - time) / n);
+        // System.out.println(best);
+        // System.out.println(avg / n);
+        // System.out.println((System.currentTimeMillis() - time) / n);
     }
 }

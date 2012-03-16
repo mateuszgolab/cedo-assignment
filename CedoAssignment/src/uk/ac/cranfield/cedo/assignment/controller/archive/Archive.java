@@ -13,7 +13,7 @@ public abstract class Archive
     protected int size;
     
     
-    public abstract void checkData(double value, double pen, double x1, double x2);
+    public abstract void checkData(double value, double x1, double x2);
     
     public abstract void addSolution(DesignVector vector);
     
