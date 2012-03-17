@@ -33,8 +33,7 @@ public class SolutionView
             System.out.println("x1 : " + v.getX1());
             System.out.println("x2 : " + v.getX2());
             System.out.println("value : " + v.getObjFunctionValue());
-            System.out.println(v.getX1() * v.getX2());
-            System.out.println("=================================" + '\n');
+            System.out.println("=================================");
             
             i--;
         }
