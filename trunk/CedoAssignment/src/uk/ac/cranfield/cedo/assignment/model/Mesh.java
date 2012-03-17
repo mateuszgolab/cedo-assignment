@@ -22,18 +22,18 @@ public class Mesh
     public Mesh()
     {
         regions = new ArrayList<Region>();
-        this.size = -1;
+        this.size = 0;
     }
     
     public int getSize()
     {
-        if (size == -1)
-            return regions.size();
         return size;
     }
     
     public void addRegion(Region region)
     {
+        
+        region.setRank(size);
         regions.add(region);
     }
     

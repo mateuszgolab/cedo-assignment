@@ -6,6 +6,7 @@ public class DesignVector
     private double x1;
     private double x2;
     private double objFunction;
+    private int region;
     
     public DesignVector()
     {
@@ -70,6 +71,24 @@ public class DesignVector
     public final void setObjFunction(double objFunction)
     {
         this.objFunction = objFunction;
+    }
+    
+    
+    /**
+     * @param region the region to set
+     */
+    public final void setRegion(int region)
+    {
+        this.region = region;
+    }
+    
+    
+    /**
+     * @return the region
+     */
+    public final int getRegion()
+    {
+        return region;
     }
     
     

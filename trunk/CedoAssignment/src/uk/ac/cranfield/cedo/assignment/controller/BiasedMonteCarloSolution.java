@@ -17,29 +17,23 @@ public class BiasedMonteCarloSolution
     public static int NUMBER_OF_SURVEYS = 5;
     
     private Mesh mesh;
-    private double Dmin;
-    private double Dsim;
-    private double surveys;
     private double sPressure;
-    private int archiveSize;
     private Random random;
     private Archive archive;
     private int trials;
     private SolutionView view;
     private double p1;
     private double p2;
+    private int numberOfDiscretization;
     
-    public BiasedMonteCarloSolution(int numberOfTrials, Archive archive)
+    public BiasedMonteCarloSolution(int numberOfTrials, Archive archive, int numberOfDiscretization)
     {
-        mesh = new Mesh(NUMBER_OF_DISCRETIZATION * NUMBER_OF_DISCRETIZATION);
-        random = new Random(System.currentTimeMillis());
         this.archive = archive;
+        this.numberOfDiscretization = numberOfDiscretization;
+        mesh = new Mesh(numberOfDiscretization * numberOfDiscretization);
+        random = new Random(System.currentTimeMillis());
         view = new SolutionView();
         trials = numberOfTrials;
-        Dmin = 1.0;
-        Dsim = 0.05;
-        surveys = 5;
-        archiveSize = 10;
         sPressure = 1.0;
         p1 = 10.0;
         p2 = 1.0;
@@ -49,14 +43,14 @@ public class BiasedMonteCarloSolution
     public void initialize()
     {
         double step = SIZE;
-        step /= NUMBER_OF_DISCRETIZATION;
+        step /= numberOfDiscretization;
         
         
         for (double i = 0.0; i < SIZE; i += step)
         {
             for (double j = 0.0; j < SIZE; j += step)
             {
-                double avgObjFunVal = calculateAvgObjFunction(i, j, step, NUMBER_OF_SURVEYS);
+                double avgObjFunVal = calculateAvgObjFunction(i, j, step, NUMBER_OF_SURVEYS, 0);
                 
                 mesh.addRegion(new Region(i, j, step, avgObjFunVal));
             }
@@ -73,7 +67,7 @@ public class BiasedMonteCarloSolution
         mesh.calculateProbability(sPressure);
     }
     
-    public double performMonteCarlo()
+    public double performMonteCarlo(boolean show)
     {
         for (int j = 0; j < 10; j++)
         {
@@ -82,7 +76,8 @@ public class BiasedMonteCarloSolution
             {
                 Region r = mesh.getRegion(random.nextDouble());
                 
-                double avgObjFunVal = calculateAvgObjFunction(r.getX1(), r.getX2(), r.getSize(), NUMBER_OF_SURVEYS);
+                double avgObjFunVal = calculateAvgObjFunction(r.getX1(), r.getX2(), r.getSize(), NUMBER_OF_SURVEYS,
+                        r.getRank());
                 
                 mesh.setRegion(r.getRank(), avgObjFunVal);
             }
@@ -92,8 +87,11 @@ public class BiasedMonteCarloSolution
             assignRanks();
             assignProbabilities();
         }
-        view.setResults(archive.getBestSolutions());
-        view.show();
+        if (show)
+        {
+            view.setResults(archive.getBestSolutions());
+            view.show();
+        }
         
         return archive.getBestSolution();
         
@@ -115,7 +113,7 @@ public class BiasedMonteCarloSolution
                 / Math.sqrt(x1 * x1 + x2 * x2));
     }
     
-    private double calculateAvgObjFunction(double x1, double x2, double size, int n)
+    private double calculateAvgObjFunction(double x1, double x2, double size, int n, int region)
     {
         double sum = 0.0;
         
