@@ -87,6 +87,7 @@ public class BiasedMonteCarloSolution
             assignRanks();
             assignProbabilities();
         }
+        
         if (show)
         {
             view.setResults(archive.getBestSolutions());
@@ -103,7 +104,7 @@ public class BiasedMonteCarloSolution
                 * Math.pow(Math.max(0.0, x1 + x2 - ADD_CONSTRAINT), 2));
     }
     
-    private double calculateObjectiveFunction(double x1, double x2)
+    public double calculateObjectiveFunction(double x1, double x2)
     {
         if (x1 * x2 <= MUL_CONSTRAINT || x1 + x2 >= ADD_CONSTRAINT)
             return 0.0;

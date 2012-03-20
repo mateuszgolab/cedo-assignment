@@ -12,12 +12,13 @@ public class Main
     public static void main(String args[])
     {
         // trialsMeasurement(1, new BestSolutionsArchive(10), true);
-        // trialsMeasurement(1, new BestDissimilarSolutionsArchive(10, 1.0, 0.05), true);
+        trialsMeasurement(1, new BestDissimilarSolutionsArchive(10, 1.0, 0.05), true);
         // 1.0, 0.05));
-        // regionsMeasurement(50, 100);
-        // dminMeasurement(10, 1.1, 0.055);
+        // regionsMeasurement(5, 100);
+        // dminMeasurement(10, 0.1);
         // dminMeasurement(20, 0.1);
-        dsimMeasurement(10, 0.01);
+        // dsimMeasurement(10, 0.01);
+        // solutionData();
     }
     
     public static void trialsMeasurement(int n, Archive a, boolean show)
@@ -45,7 +46,7 @@ public class Main
     
     public static void regionsMeasurement(int n, int iterations)
     {
-        for (int i = 10; i <= n; i += 10)
+        for (int i = 5; i <= n; i += 100)
         {
             long time = System.currentTimeMillis();
             double best = 0.0;
@@ -167,6 +168,20 @@ public class Main
             System.out.println((System.currentTimeMillis() - time) / 100);
             dSimStart += 0.01;
             
+        }
+    }
+    
+    public static void solutionData()
+    {
+        BiasedMonteCarloSolution solution = new BiasedMonteCarloSolution(1, null, 0);
+        
+        for (double i = 0.0; i < 10.0; i += 0.2)
+        {
+            for (double j = 0.0; j < 10.0; j += 0.2)
+            {
+                System.out.print(solution.calculateObjectiveFunction(i, j) + " ");
+            }
+            System.out.println();
         }
     }
 }
